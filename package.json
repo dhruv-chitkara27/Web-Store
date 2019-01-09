@@ -1,0 +1,23 @@
+{
+  "name": "web-store",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dhruv-chitkara27/Web-Store.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dhruv-chitkara27/Web-Store/issues"
+  },
+  "homepage": "https://github.com/dhruv-chitkara27/Web-Store#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "hjs": "0.0.6"
+  }
+}
