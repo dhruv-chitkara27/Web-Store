@@ -18,6 +18,7 @@
   "homepage": "https://github.com/dhruv-chitkara27/Web-Store#readme",
   "dependencies": {
     "express": "^4.16.4",
-    "hjs": "0.0.6"
+    "hjs": "0.0.6",
+    "mongoose": "^5.4.3"
   }
 }

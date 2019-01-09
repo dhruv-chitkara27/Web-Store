@@ -19,6 +19,13 @@
       </ul>
     </div>
   </nav>
+  <div class="container">
     <h1>Welcome to my sample store!</h1>
+    <form action="/register" method="post">
+      <input type="text" name="email" placeholder="Email" /><br />
+      <input type="password" name="password" placeholder="Password" /><br />
+      <input type="submit" value="Sign Up" />
+    </form>
+  </div>
   </body>
 </html>
