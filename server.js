@@ -1,6 +1,9 @@
 const express = require('express')
 const path = require('path')
 const mongoose = require('mongoose')
+const passport = require('passport')
+const session = require('express-session')
+
 const home = require('./routes/home')
 const register = require('./routes/register')
 const login = require('./routes/login')
@@ -14,6 +17,14 @@ mongoose.connect('mongodb://localhost/Web-Store', (err, data) => {
 })
 
 const app = express()
+app.use(session({
+  secret: 'heydhruv',
+  resave: true,
+  saveUninitialized: true
+}))
+
+app.use(passport.initialize())
+app.use(passport.session())
 app.set('views' , path.join(__dirname, 'views'))
 app.set('view engine' , 'hjs')
 
