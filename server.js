@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 const passport = require('passport')
 const session = require('express-session')
 
-const auth = require('./config/auth')
+const auth = require('./config/auth')(passport)
 const home = require('./routes/home')
 const register = require('./routes/register')
 const login = require('./routes/login')

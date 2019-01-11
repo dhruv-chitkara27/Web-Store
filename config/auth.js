@@ -16,7 +16,7 @@ module.exports = (passport) => {
   const localLogin = new LocalStrategy({
     usernameField: 'email',
     passwordField: 'password',
-    passReqToCallback; true
+    passReqToCallback: true
   }, (req, email, password, next) => {
 
     User.findOne({email: email}, (err, user) => {
