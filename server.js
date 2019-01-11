@@ -25,7 +25,8 @@ app.use('/register', register)
 app.use('/login',login)
 
 app.use((err, req, res, next) => {
-  res.render('error', {message: err.message})
+  console.log('ERROR: ' + err)
+  res.render('error', {message: err})
 })
 
 app.listen(5000)

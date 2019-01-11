@@ -2,42 +2,30 @@ const express = require('express')
 const router = express.Router()
 const User = require('../models/User')
 
-router.post('/', (req,res,next) => {
-      const email = req.body.email
-      User.find({email: email}, (err, users) => {
-        if(err){
-          res.json({
-            confirmation: 'fail',
-            error: err
-          })
+router.post('/', (req, res, next) => {
+	const email = req.body.email
 
-          return
-        }
+	User.findOne({email: email}, (err, user) => {
+		if (err){
+			return next(err)
+		}
 
-        if(users.length == 0){
-          res.json({
-            confirmation: 'fail',
-            error: 'User not found'
-          })
-          return
-        }
+		// user not found:
+		if (user == null)
+			return next(new Error('User Not Found'))
 
-        const user = users[0]
+		// check password:
+		if (user.password != req.body.password){
+			return next(new Error('Incorrect Password'))
+		}
 
-        //CHECK PASSWORD
-        if(user.password != req.body.password){
-          res.json({
-            confirmation: 'fail',
-            error: 'Incorrect Password'
-          })
-          return
-        }
+		res.json({
+			confirmation:'success',
+			user: user
+		})
+	})
 
-        res.json({
-          confirmation:'success',
-          user: users
-        })
-      })
+
 })
 
 module.exports = router
