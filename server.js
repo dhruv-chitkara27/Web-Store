@@ -4,9 +4,11 @@ const mongoose = require('mongoose')
 const passport = require('passport')
 const session = require('express-session')
 
+const auth = require('./config/auth')
 const home = require('./routes/home')
 const register = require('./routes/register')
 const login = require('./routes/login')
+const account = require('./routes/account')
 
 mongoose.connect('mongodb://localhost/Web-Store', (err, data) => {
   if(err){
@@ -34,6 +36,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use('/',home)
 app.use('/register', register)
 app.use('/login',login)
+app.use('/account',account)
 
 app.use((err, req, res, next) => {
   console.log('ERROR: ' + err)

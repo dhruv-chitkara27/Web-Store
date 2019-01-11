@@ -41,6 +41,5 @@ module.exports = (passport) => {
 
 
   })
-
-  })
+    passport.use('localLogin', localLogin)
 }
