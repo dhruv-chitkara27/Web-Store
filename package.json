@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/dhruv-chitkara27/Web-Store#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "express": "^4.16.4",
     "express-session": "^1.15.6",
     "hjs": "0.0.6",
