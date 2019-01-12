@@ -3,61 +3,63 @@ const User = require('../models/User')
 
 module.exports = (passport) => {
 
-  passport.serializeUser((user, next) => {
-    next(null, user)
-  })
+	passport.serializeUser((user, next) => {
+		next(null, user)
+	})
 
-  passport.deserializeUser((id, next) => {
-    User.findById(id, (err, user) => {
-      next(err, user)
-    })
-  })
+	passport.deserializeUser((id, next) => {
+		User.findById(id, (err, user) => {
+			next(err, user)
+		})
+	})
 
-  const localLogin = new LocalStrategy({
-    usernameField: 'email',
-    passwordField: 'password',
-    passReqToCallback: true
-  }, (req, email, password, next) => {
+	const localLogin = new LocalStrategy({
+		usernameField: 'email',
+		passwordField: 'password',
+		passReqToCallback: true
+	}, (req, email, password, next) => {
+		User.findOne({email: email}, (err, user) => {
+			if (err){
+				return next(err)
+			}
 
-    User.findOne({email: email}, (err, user) => {
-      if (err){
-        return next(err)
-      }
+			// user not found:
+			if (user == null)
+				return next(new Error('User Not Found'))
 
-      // user not found:
-      if (user == null)
-        return next(new Error('User Not Found'))
+			// check password:
+			if (user.password != req.body.password){
+				return next(new Error('Incorrect Password'))
+			}
 
-      // check password:
-      if (user.password != req.body.password){
-        return next(new Error('Incorrect Password'))
-      }
-        return next(null, user)
-      //res.json({
-        //confirmation:'success',
-        //user: user
-      //})
-    })
+			return next(null, user)
+		})
+	})
 
+	passport.use('localLogin', localLogin)
 
-  })
-    passport.use('localLogin', localLogin)
+	const localRegister = new LocalStrategy({
+		usernameField: 'email',
+		passwordField: 'password',
+		passReqToCallback: true
+	}, (req, email, password, next) => {
+		User.findOne({email: email}, (err, user) => {
+			if (err){
+				return next(err)
+			}
 
-    const localRegister = new LocalStrategy({
-      usernameField: 'email',
-      passwordField: 'password',
-      passReqToCallback: true
-    }, (req,email,password,next) => {
-      User.findOne({email: email}, (err, user) => {
-        if (err){
-          return next(err)
-        }
-        if(user != null)
-          return next(new Error('User already exists, please log in'))
+			if (user != null)
+				return next(new Error('User already exists, please log in.'))
 
-          //Create the new user
-          User.create({email:email})
-      })
+			// create the new user:
+			User.create({email:email, password:password}, (err, user) => {
+				if (err)
+					return next(err)
 
-    })
+				next(null, user)
+			})
+		})
+	})
+
+	passport.use('localRegister', localRegister)
 }
