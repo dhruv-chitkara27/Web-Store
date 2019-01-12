@@ -47,7 +47,17 @@ module.exports = (passport) => {
       usernameField: 'email',
       passwordField: 'password',
       passReqToCallback: true
-    }, () => {
+    }, (req,email,password,next) => {
+      User.findOne({email: email}, (err, user) => {
+        if (err){
+          return next(err)
+        }
+        if(user != null)
+          return next(new Error('User already exists, please log in'))
+
+          //Create the new user
+          User.create({email:email})
+      })
 
     })
 }
