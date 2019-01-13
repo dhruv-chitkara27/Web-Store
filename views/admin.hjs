@@ -1,6 +1,14 @@
 <html>
   <head>
     <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" />
+    <style type="text/css">
+      .item {
+        padding: 12px;
+        background: #f9f9f9;
+        border: 1px solid #ddd;
+        margin-bottom: 24px
+      }
+    </style>
   </head>
   <body>
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -21,7 +29,29 @@
   </nav>
   <div class="container">
     <h1>Admin Page</h1>
-
+    <div class="row">
+      <div class="col-6">
+        <form action="/admin/additem" method="post">
+          <input type="text" name="name" placeholder="Name" /><br />
+          <input type="text" name="description" placeholder="Description" /><br />
+          <input type="text" name="price" placeholder="Price" /><br />
+          <input type="submit" value="Add Item" />
+        </form>
+      </div>
+      <div class="col-6">
+        <h3>Current Items</h3>
+        <ol>
+          {{#items}}
+          <li>
+            <div class="item">
+              {{name}}<br />
+              <button>Add</button>
+            </div>
+          </li>
+          {{/items}}
+        </ol>
+      </div>
+    </div>
   </div>
   </body>
 </html>
