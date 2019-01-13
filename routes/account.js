@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const Item = require('../models/Item')
+const User = require('../models/User')
 
 router.get('/', (req, res, next) => {
 	const user = req.user
@@ -53,6 +54,20 @@ router.get('/additem/:itemid', (req, res, next) => {
 router.get('/logout', (req, res, next) => {
 	req.logout()
 	res.redirect('/')
+})
+
+router.post('/resetpassword', (req, res, next) => {
+
+  User.findOne({email: req.body.email}, (err, user) =>{
+    if(err)
+      return next(err)
+
+    res.json({
+      confirmation: 'success',
+      data: 'reset password endpoint',
+      email: user
+    })
+  })
 })
 
 module.exports = router
