@@ -139,13 +139,52 @@ router.get('/password-reset', (req, res, next) => {
     }
 
     // render the page where users can reset password
-
-    res.json({
-      user: user,
-      diff: seconds
-    })
+    const data = {
+      id: user_id,
+      nonce: nonce
+    }
+    res.render('password-reset', data)
+    //res.json({
+      //user: user,
+      //diff: seconds
+    //})
   })
 
+})
+
+router.post('/newpassword', (req, res, next) => {
+  const password1 = req.body.password1
+  if(password1 == null){
+    return next(new Error('Invalid Request'))
+  }
+  const password2 = req.body.password2
+  if(password2 == null){
+    return next(new Error('Invalid Request'))
+  }
+  const nonce = req.body.nonce
+  if(nonce == null){
+    return next(new Error('Invalid Request'))
+  }
+  const user_id = req.body.id
+  if(user_id == null){
+    return next(new Error('Invalid Request'))
+  }
+
+  if(password1 != password2){
+    return next(new Error('Passwords do not match'))
+  }
+  User.findById(user_id, (err, user) => {
+    if(err)
+      return next(err)
+
+    if(user.passwordResetTime == null){
+      return next(new Error('Invalid Request'))
+    }
+    if(user.nonce == null){
+      return next(new Error('Invalid Request'))
+    }
+  })
+  })
 })
 
 module.exports = router
