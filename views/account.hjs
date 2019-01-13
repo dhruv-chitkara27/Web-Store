@@ -37,7 +37,7 @@
           <li>
             <div class="item">
               {{name}}<br />
-              <button>Add</button>
+              <a class="btn btn-success" href="/account/additem/{{id}}">Add</a>
             </div>
           </li>
           {{/items}}
