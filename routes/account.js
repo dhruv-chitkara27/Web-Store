@@ -138,6 +138,8 @@ router.get('/password-reset', (req, res, next) => {
       return next(new Error('Invalid Request'))
     }
 
+    // render the page where users can reset password
+
     res.json({
       user: user,
       diff: seconds
