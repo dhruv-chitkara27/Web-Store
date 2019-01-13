@@ -9,6 +9,7 @@ const home = require('./routes/home')
 const register = require('./routes/register')
 const login = require('./routes/login')
 const account = require('./routes/account')
+const admin = require('./routes/admin')
 
 mongoose.connect('mongodb://localhost/Web-Store', (err, data) => {
   if(err){
@@ -37,6 +38,7 @@ app.use('/',home)
 app.use('/register', register)
 app.use('/login',login)
 app.use('/account',account)
+app.use('/admin', admin)
 
 app.use((err, req, res, next) => {
   console.log('ERROR: ' + err)
